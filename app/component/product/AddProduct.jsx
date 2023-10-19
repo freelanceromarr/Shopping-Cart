@@ -12,7 +12,7 @@ function genID(products) {
     return maxId +1 ; 
 }
 const AddProduct =()=>{
-    const products = useSelector(state=>state)
+    const products = useSelector(state=>state.products)
     const dispatch = useDispatch()
     const [input, setInput]= useState({
         id:"",

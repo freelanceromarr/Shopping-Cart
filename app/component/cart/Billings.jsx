@@ -1,4 +1,12 @@
-const Billings = ()=>{
+const Billings = ({cart})=>{
+    function cartAmount(cart){
+    let cartTotal= cart.reduce((total, cartItem)=>{
+        return total += cartItem.price*cartItem.quantity
+      }, 0) 
+      
+      return cartTotal;
+    }
+    console.log(cartAmount(cart));
     return (
         <div>
                     <div class="billDetailsCard">
@@ -7,22 +15,22 @@ const Billings = ()=>{
                         {/* <!-- sub total --> */}
                         <div class="flex items-center justify-between">
                             <p>Sub Total</p>
-                            <p>BDT <span class="lws-subtotal">8800</span></p>
+                            <p>USD <span class="lws-subtotal"> {cartAmount(cart)} </span></p>
                         </div>
                         {/* <!-- Discount --> */}
                         <div class="flex items-center justify-between">
                             <p>Discount</p>
-                            <p>BDT <span class="lws-discount">0</span></p>
+                            <p>USD <span class="lws-discount">0</span></p>
                         </div>
                         {/* <!-- VAT --> */}
                         <div class="flex items-center justify-between">
                             <p>VAT</p>
-                            <p>BDT <span class="vat">0</span></p>
+                            <p>USD <span class="vat">0</span></p>
                         </div>
                         {/* <!-- Total --> */}
                         <div class="flex items-center justify-between pb-4">
                             <p class="font-bold">TOTAL</p>
-                            <p class="font-bold">BDT <span class="lws-total">8800</span></p>
+                            <p class="font-bold">USD <span class="lws-total"> {cartAmount(cart)} </span></p>
                         </div>
                         <button class="placeOrderbtn">place order</button>
                         </div>

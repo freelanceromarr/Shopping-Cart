@@ -13,7 +13,7 @@ const cartReducer = (state = initialState, action)=>{
             ]
         case DELETECART:
             return state.filter(cartItem=> cartItem !== payload);
-    
+        
         default:
             return state;
     }

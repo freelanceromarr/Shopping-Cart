@@ -9,7 +9,7 @@ import ProductListing from "../component/product/ProductListing";
 
 const Product = () =>{
 const products = useSelector(state=>state.products)
-    console.log(products);
+    
     return(
     <div>
       
@@ -18,11 +18,13 @@ const products = useSelector(state=>state.products)
             <main className="py-16">
                 <div className="productWrapper">
                 {/* <!-- products container --> */}
-                {
-                    products.map((product) =>{
-                        return <ProductListing key={product.id} product={product}/>
-                    })
-                }
+                    <div class="productContainer" id="lws-productContainer">
+                    {
+                        products.map((product) =>{
+                            return <ProductListing key={product.id} product={product}/>
+                        })
+                    }
+                </div>
                 {/* <!-- products container ends --> */}
                     <AddProduct/>
                 </div>

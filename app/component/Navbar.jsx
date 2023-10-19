@@ -2,7 +2,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartPlus} from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link';
 
-const Navbar = ()=>{
+const Navbar = ({cart})=>{
+    const totalCartQuantity = (cart)=>{
+        return cart.reduce((total, cartItem)=>total+=cartItem.quantity,0)
+    }
+   
     return (
     <nav className="bg-[#171C2A] py-4">
         <div className="navBar">
@@ -15,7 +19,7 @@ const Navbar = ()=>{
             
             <Link href="/cart" className="navCart" id="lws-cart">
             <FontAwesomeIcon icon={faCartPlus} />
-            <span id="lws-totalCart">0</span>
+            <span id="lws-totalCart"> {totalCartQuantity(cart)} </span>
             </Link>
         </div>
         </div>
