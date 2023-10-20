@@ -1,15 +1,15 @@
-import { addTocart } from "@/app/redux/cart/actions";
+import { addTocart, cartDetails } from "@/app/redux/cart/actions";
 import { removeQuantity } from "@/app/redux/product/actions";
 import { useDispatch, useSelector } from "react-redux";
 
 const ProductListing =({product})=>{
-    const carts = useSelector(state=>state.cart)
-    // console.log(carts);
+
     const dispatch = useDispatch()
-    const addTocartHandler = (productId)=>{
-        dispatch(addTocart(productId))
-        dispatch(removeQuantity(productId))
+    const addTocartHandler =  (productId)=>{
+         dispatch(addTocart(productId))
+         dispatch(removeQuantity(productId))
     }
+
     return (
        <>
                     {/* <!-- product item --> */}

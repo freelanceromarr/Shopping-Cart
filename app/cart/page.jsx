@@ -4,31 +4,41 @@ import Billings from "../component/cart/Billings";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { decreaseQuantity, deleteProduct, increaseQuantity } from "../redux/cart/actions";
+import { addQuantity, removeQuantity, restoreQunatityOnCartDelete } from "../redux/product/actions";
 
 const Cart = ()=>{
+const carts = useSelector(state=>state.cart)
+const products = useSelector(state=>state.products)
+const dispatch = useDispatch()
+    console.log(carts);
+const {cartDetails} = carts;
 
-    const products = useSelector(state=>state.products)
-    const cart = useSelector(state=>state.cart)
-    console.log(cart);
-    
-    
-    
-    const cartItems= products.filter((product, index)=>cart.includes(product.id))
-   
-    const cartItemQuntity= products.map(product => {
-        return cart.filter(cart => product.id === cart).length
-    })
-    
 
-    const finalcart = cartItems.map((item, index) =>{
-        return {...item, quantity: cartItemQuntity[index]}
+console.log(carts);
+
+    const cartItems= products.filter((product, index)=>carts.cartId.includes(product.id)) 
+    const finalcart = cartItems.map((item) =>{
+        return {...item, quantity: carts.cartId.filter(cart => item.id === cart).length}
              
     })
-    console.log(finalcart);
-    return (
+console.log(cartItems);
+    const increaseCartItem = (id)=>{
+        dispatch(increaseQuantity(id))
+        dispatch(removeQuantity(id))
+    }
+    const decreaseCartItem = (id)=>{
+        dispatch(decreaseQuantity(id))
+        dispatch(addQuantity(id))
+    }
+    const cartItemDeleteHandler = (id, quantity)=>{
+        dispatch(deleteProduct(id))
+        dispatch(restoreQunatityOnCartDelete(id, quantity))
+    }
+return (
         <>
-            <Navbar cart ={finalcart}/>
+            
             <main className="py-16">
                 <div className="container 2xl:px-8 px-2 mx-auto">
                 <h2 className="mb-8 text-xl font-bold">Shopping Cart</h2>
@@ -44,7 +54,7 @@ const Cart = ()=>{
                         <img className="lws-cartImage" src={cartItem.image} alt="product" />
                         {/* <!-- cart item info --> */}
                         <div className="space-y-2">
-                            <h4 className="lws-cartName">{cartItem.name}</h4>
+                            <h4 className="lws-cartName"> {cartItem.id} {cartItem.name}</h4>
                             <p className="lws-cartCategory">{cartItem.category}</p>
                             <p>USD <span className="lws-cartPrice"> {cartItem.price} </span></p>
                         </div>
@@ -52,12 +62,16 @@ const Cart = ()=>{
                         <div className="flex items-center justify-center col-span-4 mt-4 space-x-8 md:mt-0">
                         {/* <!-- amount buttons --> */}
                         <div className="flex items-center space-x-4">
-                            <button className="lws-incrementQuantity">
-                            <i className="text-lg fa-solid fa-plus"><FontAwesomeIcon icon={faPlus} /></i>
+                            <button  
+                                onClick={()=>decreaseCartItem(cartItem.id)}
+                                className="lws-incrementQuantity">
+                            <i className="text-lg fa-solid fa-plus"><FontAwesomeIcon icon={faMinus} /></i>
                             </button>
                             <span className="lws-cartQuantity"> {cartItem.quantity} </span>
-                            <button className="lws-decrementQuantity">
-                            <i className="text-lg fa-solid fa-minus"><FontAwesomeIcon icon={faMinus} /></i>
+                            <button 
+                                onClick={()=>increaseCartItem(cartItem.id)} 
+                                className="lws-decrementQuantity">
+                            <i className="text-lg fa-solid fa-minus"><FontAwesomeIcon icon={faPlus} /></i>
                             </button>
                         </div>
                         {/* <!-- price --> */}
@@ -65,7 +79,9 @@ const Cart = ()=>{
                         </div>
                         {/* <!-- delete button --> */}
                         <div className="flex items-center justify-center col-span-2 mt-4 md:justify-end md:mt-0">
-                        <button className="lws-removeFromCart">
+                        <button 
+                            onClick={() => cartItemDeleteHandler(cartItem.id, cartItem.quantity)}
+                            className="lws-removeFromCart">
                            
                             <i className="text-lg text-red-400"> <FontAwesomeIcon icon={faTrash} /></i>
                         </button>

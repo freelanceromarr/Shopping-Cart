@@ -1,4 +1,4 @@
-import { ADDPRODUCT, ADDQUANTITY, REMOVEQUANTITY } from "./actionTypes"
+import { ADDPRODUCT, ADDQUANTITY, DELETECARTITEM, REMOVEQUANTITY } from "./actionTypes"
 
 const initialState = [
     {
@@ -31,6 +31,12 @@ const productReducer = (state = initialState, action) =>{
                     return {...product, quantity: parseFloat(product.quantity) - 1}
                 }return product
             })
+        case DELETECARTITEM:
+            return state.map(product => {
+                if (product.id === payload.cartId) {
+                    return {...product, quantity: parseFloat(product.quantity) + payload.cartQuantity}
+                }return product
+                })
         default:
             return state;
     }

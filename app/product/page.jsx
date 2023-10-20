@@ -13,7 +13,7 @@ const products = useSelector(state=>state.products)
     return(
     <div>
       
-            <Navbar/>
+           
 
             <main className="py-16">
                 <div className="productWrapper">
