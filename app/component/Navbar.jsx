@@ -16,7 +16,8 @@ const Navbar = (props)=>{
             </a>
 
             <div className="flex gap-4">
-                <Link href="/product" className="navHome" id="lws-home"> Home </Link>
+                <Link href="/" className="navHome" id="lws-home"> Home </Link>
+                <Link href="/product" className="navHome" id="lws-home"> Add Product </Link>
                 
                 <Link href="/cart" className="navCart" id="lws-cart">
                 <FontAwesomeIcon icon={faCartPlus} />
